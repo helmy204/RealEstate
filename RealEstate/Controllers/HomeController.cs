@@ -15,8 +15,9 @@ namespace RealEstate.Controllers
 
         public ActionResult Index()
         {
-            Context.Database.GetStats();
-            return Json(Context.Database.Server.BuildInfo, JsonRequestBehavior.AllowGet);
+            //Context.Database.GetStats();
+            //return Json(Context.Database.Server.BuildInfo, JsonRequestBehavior.AllowGet);
+            return Content("");
         }
 
         public ActionResult About()
