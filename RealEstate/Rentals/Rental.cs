@@ -19,6 +19,8 @@ namespace RealEstate.Rentals
         [BsonRepresentation(BsonType.Double)]
         public decimal Price { get; set; }
 
+        public List<PriceAdjustment> Adjustments = new List<PriceAdjustment>();
+
         public Rental()
         {
 
@@ -30,6 +32,13 @@ namespace RealEstate.Rentals
             NumberOfRooms = postRental.NumberOfRooms;
             Price = postRental.Price;
             Address = (postRental.Address ?? string.Empty).Split('\n').ToList();
+        }
+
+        public void AdjustPrice(AdjustPrice adjustPrice)
+        {
+            var adjustment = new PriceAdjustment(adjustPrice, Price);
+            Adjustments.Add(adjustment);
+            Price = adjustPrice.NewPrice;
         }
     }
 }

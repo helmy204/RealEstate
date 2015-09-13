@@ -1,4 +1,5 @@
-﻿using RealEstate.App_Start;
+﻿using MongoDB.Bson;
+using RealEstate.App_Start;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,27 @@ namespace RealEstate.Rentals
         {
             var rental = new Rental(postRental);
             Context.Rentals.Insert(rental);
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult AdjustPrice(string id)
+        {
+            var rental = GetRental(id);
+            return View(rental);
+        }
+
+        private Rental GetRental(string id)
+        {
+            var rental = Context.Rentals.FindOneById(new ObjectId(id));
+            return rental;
+        }
+
+        [HttpPost]
+        public ActionResult AdjustPrice(string id, AdjustPrice adjustPrice)
+        {
+            var rental = GetRental(id);
+            rental.AdjustPrice(adjustPrice);
+            Context.Rentals.Save(rental);
             return RedirectToAction("Index");
         }
 	}
