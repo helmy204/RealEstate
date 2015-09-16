@@ -143,6 +143,7 @@
     <Compile Include="Rentals\AdjustPrice.cs" />
     <Compile Include="Rentals\PostRental.cs" />
     <Compile Include="Rentals\PriceAdjustment.cs" />
+    <Compile Include="Rentals\QueryPriceDistribution.cs" />
     <Compile Include="Rentals\Rental.cs" />
     <Compile Include="Rentals\RentalsController.cs" />
     <Compile Include="Rentals\RentalsFilter.cs" />
@@ -186,6 +187,7 @@
     <Content Include="Views\Rentals\Post.cshtml" />
     <Content Include="Views\Rentals\Index.cshtml" />
     <Content Include="Views\Rentals\AdjustPrice.cshtml" />
+    <Content Include="Views\Rentals\AttachImage.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MongoDB.Driver.Linq;
+using MongoDB.Driver.GridFS;
 
 namespace RealEstate.Rentals
 {
@@ -114,6 +115,35 @@ namespace RealEstate.Rentals
         public ActionResult Delete(string id)
         {
             Context.Rentals.Remove(Query.EQ("_id", new ObjectId(id)));
+            return RedirectToAction("Index");
+        }
+
+        public string PriceDistribution()
+        {
+            return new QueryPriceDistribution()
+              .Run(Context.Rentals)
+              .ToJson();
+        }
+
+        public ActionResult AttachImage(string id)
+        {
+            var rental = GetRental(id);
+            return View(rental);
+        }
+
+        [HttpPost]
+        public ActionResult AttachImage(string id, HttpPostedFileBase file)
+        {
+            var rental = GetRental(id);
+            var imageId = ObjectId.GenerateNewId();
+            rental.ImageId = imageId.ToString();
+            Context.Rentals.Save(rental);
+            var options = new MongoGridFSCreateOptions
+            {
+                Id = imageId,
+                ContentType = file.ContentType
+            };
+            Context.Database.GridFS.Upload(file.InputStream, file.FileName);
             return RedirectToAction("Index");
         }
     }
