@@ -41,5 +41,10 @@ namespace RealEstate.Rentals
             Adjustments.Add(adjustment);
             Price = adjustPrice.NewPrice;
         }
+
+        public bool HasImage()
+        {
+            return !String.IsNullOrWhiteSpace(ImageId);
+        }
     }
 }

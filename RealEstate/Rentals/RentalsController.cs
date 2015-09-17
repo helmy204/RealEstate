@@ -146,5 +146,18 @@ namespace RealEstate.Rentals
             Context.Database.GridFS.Upload(file.InputStream, file.FileName);
             return RedirectToAction("Index");
         }
+
+        public ActionResult GetImage(string id)
+        {
+            var image = Context.Database.GridFS
+                               .FindOneById(new ObjectId(id));
+
+            if (image == null)
+            {
+                return HttpNotFound();
+            }
+
+            return File(image.OpenRead(), image.ContentType);
+        }
     }
 }
